@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import heroBg from '../hero-bg.png';
 import styles from './Products.module.css';
 
 const products = [
@@ -24,7 +25,7 @@ const products = [
     description:
       'Experience therapeutic hydrotherapy with our precision-engineered wooden jacuzzis. Powerful jet systems combined with handcrafted wood panels create the perfect blend of technology and nature.',
     features: ['Hydro Jets', 'LED Lighting', 'Insulated Shell', 'Smart Controls'],
-    image: 'https://juraspa.pl/wp-content/uploads/2024/07/DSC_4425-HDR.jpg',
+    image: heroBg.src,
     accent: '#5B8FA8',
     tag: 'Premium',
   },
@@ -58,6 +59,10 @@ export default function Products() {
   const [activeTab, setActiveTab] = useState(products[0].id);
 
   const active = products.find((p) => p.id === activeTab)!;
+  const handleImageError = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    event.currentTarget.onerror = null;
+    event.currentTarget.src = heroBg.src;
+  };
 
   return (
     <section className={styles.products} id="products">
@@ -99,6 +104,7 @@ export default function Products() {
                 src={active.image}
                 alt={active.title}
                 className={styles.productImg}
+                onError={handleImageError}
               />
               <div className={styles.imageBadge}>
                 <span>{active.tag}</span>
@@ -154,7 +160,7 @@ export default function Products() {
               onClick={() => setActiveTab(product.id)}
             >
               <div className={styles.gridCardImg}>
-                <img src={product.image} alt={product.title} />
+                <img src={product.image} alt={product.title} onError={handleImageError} />
               </div>
               <div className={styles.gridCardInfo}>
                 <span className={styles.gridCardCategory}>{product.category}</span>
