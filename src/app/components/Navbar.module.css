@@ -1,0 +1,229 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding: 1.5rem 0;
+}
+
+.navbar.scrolled {
+  background: rgba(253, 251, 248, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(196, 168, 130, 0.2);
+  padding: 1rem 0;
+  box-shadow: 0 4px 30px rgba(44, 31, 20, 0.06);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoIcon {
+  font-size: 1.25rem;
+  color: var(--color-cedar);
+  line-height: 1;
+}
+
+.logoText {
+  font-family: var(--font-serif);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--color-earth);
+  transition: color 0.3s ease;
+}
+
+.navbar:not(.scrolled) .logoText {
+  color: var(--color-white);
+}
+
+.navbar:not(.scrolled) .logoIcon {
+  color: var(--color-cedar);
+}
+
+/* Nav Links */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+}
+
+.navLink {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-bark);
+  text-decoration: none;
+  padding: 0.5rem 0.875rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.navbar:not(.scrolled) .navLink {
+  color: rgba(254, 252, 248, 0.85);
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  right: 50%;
+  height: 1px;
+  background: var(--color-cedar);
+  transition: all 0.3s ease;
+}
+
+.navLink:hover::after {
+  left: 0.875rem;
+  right: 0.875rem;
+}
+
+.navLink:hover {
+  color: var(--color-earth);
+}
+
+.navbar:not(.scrolled) .navLink:hover {
+  color: var(--color-white);
+}
+
+/* Actions */
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-shrink: 0;
+}
+
+.phoneLink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-bark);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.navbar:not(.scrolled) .phoneLink {
+  color: rgba(254, 252, 248, 0.85);
+}
+
+.phoneLink:hover {
+  color: var(--color-cedar);
+}
+
+.ctaBtn {
+  font-size: 0.75rem !important;
+  padding: 0.75rem 1.5rem !important;
+}
+
+/* Mobile Toggle */
+.mobileToggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.bar {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background-color: var(--color-earth);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.navbar:not(.scrolled) .bar {
+  background-color: var(--color-white);
+}
+
+.bar.open:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.bar.open:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.bar.open:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile Menu */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-white);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-100%);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+}
+
+.mobileMenu.mobileMenuOpen {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.mobileLinks {
+  list-style: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobileLink {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 400;
+  color: var(--color-earth);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: color 0.25s ease;
+}
+
+.mobileLink:hover {
+  color: var(--color-cedar);
+}
+
+.mobileCta {
+  margin-top: 1rem;
+  font-size: 0.875rem !important;
+}
+
+@media (max-width: 1024px) {
+  .navLinks { display: none; }
+  .phoneLink { display: none; }
+  .ctaBtn { display: none; }
+  .mobileToggle { display: flex; }
+}
+
+@media (max-width: 768px) {
+  .navbar { padding: 1.25rem 0; }
+  .navbar.scrolled { padding: 0.875rem 0; }
+}
