@@ -18,12 +18,8 @@ export default function Hero() {
             <span>Handcrafted in Olkusz, Poland</span>
           </div>
 
-          <p className={styles.kicker}>Outdoor wellness, built around your space</p>
-
           <h1 className={styles.title}>
-            Garden spas that feel
-            <br />
-            <em>tailor-made from day one.</em>
+            Garden spas that feel <em>tailor-made from day one.</em>
           </h1>
 
           <p className={styles.description}>
@@ -40,27 +36,6 @@ export default function Hero() {
             <a href="#products" className={styles.secondaryCta}>
               Explore Collections
             </a>
-          </div>
-
-          <div className={styles.trustRow}>
-            <div className={styles.reviews}>
-              <div className={styles.stars}>
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <svg key={i} width="18" height="18" fill="#F1C40F" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                ))}
-              </div>
-              <span className={styles.reviewText}>
-                <strong>Trusted by</strong> 500+ clients
-              </span>
-            </div>
-
-            <div className={styles.statPills}>
-              <span className={styles.statPill}>Made to order</span>
-              <span className={styles.statPill}>Premium timber</span>
-              <span className={styles.statPill}>24h response</span>
-            </div>
           </div>
         </div>
       </div>
