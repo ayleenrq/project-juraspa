@@ -3,43 +3,30 @@
 import { useState } from 'react';
 import styles from './ConfiguratorCTA.module.css';
 
-const steps = [
-  { id: 1, label: 'Product Type', options: ['Garden Tub', 'Garden Jacuzzi', 'Garden Sauna', 'Cold Plunge'] },
-  { id: 2, label: 'Wood Type', options: ['Siberian Larch', 'Polish Oak', 'Thermowood', 'Pine'] },
-  { id: 3, label: 'Size / Capacity', options: ['2 Persons', '4 Persons', '6 Persons', '8+ Persons'] },
-  { id: 4, label: 'Heating System', options: ['Wood-fired (External)', 'Wood-fired (Internal)', 'Electric', 'Without Heater'] },
-];
+const initialForm = {
+  name: '',
+  email: '',
+  message: '',
+};
 
 export default function ConfiguratorCTA() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [selections, setSelections] = useState<Record<number, string>>({});
+  const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
 
-  const step = steps[currentStep];
-
-  const select = (option: string) => {
-    setSelections((prev) => ({ ...prev, [step.id]: option }));
+  const updateField = (field: keyof typeof initialForm, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const next = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep((s) => s + 1);
-    } else {
-      setSubmitted(true);
-    }
-  };
-
-  const back = () => {
-    if (currentStep > 0) setCurrentStep((s) => s - 1);
+  const submit = () => {
+    setSubmitted(true);
   };
 
   const reset = () => {
-    setCurrentStep(0);
-    setSelections({});
+    setForm(initialForm);
     setSubmitted(false);
   };
 
-  const progress = ((currentStep + (selections[step?.id] ? 1 : 0)) / steps.length) * 100;
+  const isComplete = form.name.trim() && form.email.trim();
 
   return (
     <section className={styles.section} id="configurator">
@@ -62,8 +49,8 @@ export default function ConfiguratorCTA() {
             <em>Dream Spa</em>
           </h2>
           <p className={styles.desc}>
-            Walk through our simple configuration wizard. We'll prepare a personalised
-            quote and reach out within 24 hours to discuss your project.
+            Send us your details and a short note about your project. We&apos;ll get back
+            to you within 24 hours with the next steps.
           </p>
 
           <ul className={styles.guarantees}>
@@ -90,60 +77,65 @@ export default function ConfiguratorCTA() {
         <div className={styles.wizard}>
           {!submitted ? (
             <>
-              {/* Progress */}
-              <div className={styles.progressBar}>
-                <div className={styles.progressFill} style={{ width: `${progress}%` }}></div>
-              </div>
-              <div className={styles.stepInfo}>
-                <span className={styles.stepCount}>Step {currentStep + 1} of {steps.length}</span>
-                <span className={styles.stepLabel}>{step.label}</span>
-              </div>
-
-              {/* Options */}
-              <div className={styles.options}>
-                {step.options.map((opt) => (
-                  <button
-                    key={opt}
-                    className={`${styles.option} ${selections[step.id] === opt ? styles.optionSelected : ''}`}
-                    onClick={() => select(opt)}
-                  >
-                    <span className={styles.optionCheck}>
-                      {selections[step.id] === opt && (
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><path d="M20 6L9 17l-5-5"/></svg>
-                      )}
-                    </span>
-                    {opt}
-                  </button>
-                ))}
+              <div className={styles.formIntro}>
+                <span className={styles.formEyebrow}>Quick Contact</span>
+                <h3 className={styles.formTitle}>Tell Us About Your Project</h3>
+                <p className={styles.formText}>
+                  Leave your contact details and we&apos;ll help you choose the right spa setup.
+                </p>
               </div>
 
-              {/* Summary pills */}
-              {Object.keys(selections).length > 0 && (
+              <div className={styles.formFields}>
+                <label className={styles.field}>
+                  <span className={styles.fieldLabel}>Full Name</span>
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={(event) => updateField('name', event.target.value)}
+                    placeholder="Your name"
+                    className={styles.input}
+                  />
+                </label>
+
+                <label className={styles.field}>
+                  <span className={styles.fieldLabel}>Email</span>
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={(event) => updateField('email', event.target.value)}
+                    placeholder="you@example.com"
+                    className={styles.input}
+                  />
+                </label>
+
+                <label className={styles.field}>
+                  <span className={styles.fieldLabel}>Message</span>
+                  <textarea
+                    value={form.message}
+                    onChange={(event) => updateField('message', event.target.value)}
+                    placeholder="Tell us what kind of spa you're looking for..."
+                    className={`${styles.input} ${styles.textarea}`}
+                    rows={4}
+                  />
+                </label>
+              </div>
+
+              {form.message.trim() && (
                 <div className={styles.summary}>
-                  {Object.entries(selections).map(([id, val]) => {
-                    const s = steps.find((s) => s.id === parseInt(id));
-                    return (
-                      <span key={id} className={styles.summaryPill}>
-                        {s?.label}: <strong>{val}</strong>
-                      </span>
-                    );
-                  })}
+                  <span className={styles.summaryPill}>
+                    Message ready to send
+                  </span>
                 </div>
               )}
 
-              {/* Navigation */}
               <div className={styles.navRow}>
-                {currentStep > 0 && (
-                  <button className={styles.backBtn} onClick={back}>
-                    ← Back
-                  </button>
-                )}
                 <button
-                  className={`${styles.nextBtn} ${!selections[step.id] ? styles.nextDisabled : ''}`}
-                  onClick={next}
-                  disabled={!selections[step.id]}
+                  type="button"
+                  className={`${styles.nextBtn} ${!isComplete ? styles.nextDisabled : ''}`}
+                  onClick={submit}
+                  disabled={!isComplete}
                 >
-                  {currentStep === steps.length - 1 ? 'Send Configuration →' : 'Next →'}
+                  Send Configuration →
                 </button>
               </div>
             </>
@@ -153,24 +145,29 @@ export default function ConfiguratorCTA() {
               <div className={styles.successIcon}>✓</div>
               <h3 className={styles.successTitle}>Configuration Sent!</h3>
               <p className={styles.successText}>
-                We've received your configuration summary. Our team will contact you
+                We&apos;ve received your configuration summary. Our team will contact you
                 within 24 hours to discuss your project and provide a detailed quote.
               </p>
               <div className={styles.successConfig}>
-                {Object.entries(selections).map(([id, val]) => {
-                  const s = steps.find((s) => s.id === parseInt(id));
-                  return (
-                    <div key={id} className={styles.successLine}>
-                      <span>{s?.label}</span>
-                      <strong>{val}</strong>
-                    </div>
-                  );
-                })}
+                <div className={styles.successLine}>
+                  <span>Name</span>
+                  <strong>{form.name}</strong>
+                </div>
+                <div className={styles.successLine}>
+                  <span>Email</span>
+                  <strong>{form.email}</strong>
+                </div>
+                {form.message.trim() && (
+                  <div className={styles.successMessage}>
+                    <span>Message</span>
+                    <p>{form.message}</p>
+                  </div>
+                )}
               </div>
               <a href="tel:+48518818285" className={`btn btn-primary ${styles.successCta}`}>
                 <span>Call Us Now: 518 818 285</span>
               </a>
-              <button className={styles.resetBtn} onClick={reset}>
+              <button type="button" className={styles.resetBtn} onClick={reset}>
                 Start New Configuration
               </button>
             </div>

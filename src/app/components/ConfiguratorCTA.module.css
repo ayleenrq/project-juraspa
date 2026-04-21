@@ -91,30 +91,12 @@
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
 }
 
-/* Progress Bar */
-.progressBar {
-  height: 3px;
-  background: var(--color-sand);
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
+.formIntro {
+  margin-bottom: 1.75rem;
 }
 
-.progressFill {
-  height: 100%;
-  background: linear-gradient(to right, var(--color-cedar), var(--color-walnut));
-  border-radius: var(--radius-full);
-  transition: width 0.4s ease;
-}
-
-.stepInfo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-}
-
-.stepCount {
+.formEyebrow {
+  display: inline-block;
   font-family: var(--font-sans);
   font-size: 0.75rem;
   font-weight: 600;
@@ -123,65 +105,75 @@
   color: var(--color-cedar);
 }
 
-.stepLabel {
+.formTitle {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 500;
   color: var(--color-earth);
+  margin-top: 0.5rem;
 }
 
-/* Options grid */
-.options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+.formText {
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-bark);
+}
+
+.formGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
   margin-bottom: 1.5rem;
 }
 
-.option {
+.formFields {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.fieldLabel {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-cedar);
+}
+
+.input {
+  width: 100%;
   background: var(--color-steam);
   border: 1.5px solid var(--color-sand);
   border-radius: var(--radius-md);
-  padding: 0.875rem 1rem;
+  padding: 0.95rem 1rem;
   font-family: var(--font-sans);
   font-size: 0.875rem;
-  font-weight: 500;
   color: var(--color-bark);
-  cursor: pointer;
-  text-align: left;
   transition: all 0.2s ease;
 }
 
-.option:hover {
+.input::placeholder {
+  color: rgba(57, 53, 45, 0.55);
+}
+
+.input:focus {
+  outline: none;
   border-color: var(--color-cedar);
   background: rgba(92, 160, 157, 0.08);
+  box-shadow: 0 0 0 4px rgba(92, 160, 157, 0.12);
 }
 
-.optionSelected {
-  border-color: var(--color-walnut) !important;
-  background: rgba(92, 160, 157, 0.1) !important;
-  color: var(--color-earth) !important;
-}
-
-.optionCheck {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid var(--color-cedar);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: transparent;
-  transition: all 0.2s ease;
-}
-
-.optionSelected .optionCheck {
-  background: var(--color-walnut);
-  border-color: var(--color-walnut);
+.textarea {
+  min-height: 7.5rem;
+  resize: vertical;
 }
 
 /* Summary */
@@ -298,12 +290,34 @@
 .successLine {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
   font-family: var(--font-sans);
   font-size: 0.875rem;
 }
 
 .successLine span { color: var(--color-cedar); }
 .successLine strong { color: var(--color-earth); }
+
+.successMessage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(92, 160, 157, 0.2);
+}
+
+.successMessage span {
+  color: var(--color-cedar);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+}
+
+.successMessage p {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--color-earth);
+}
 
 .successCta {
   width: 100%;
@@ -334,9 +348,5 @@
 }
 
 @media (max-width: 540px) {
-  .options {
-    grid-template-columns: 1fr;
-  }
-
   .wizard { padding: 1.75rem; }
 }
